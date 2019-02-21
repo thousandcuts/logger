@@ -171,7 +171,7 @@ DEFAULT_LOGGING = {
         },
         'sanic.root': {
             'handlers': ['default'],
-            'level': 'WARNING',
+            'level': 'DEBUG',
             'propagate': False
         },
         'sanic.access': {
