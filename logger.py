@@ -202,6 +202,7 @@ def get_log(name='root'):
 def setup_logging(app: sanic.Sanic):
     app.config.LOGO = f'Sanic v.{sanic.__version__}'
     log_config = DEFAULT_LOGGING
+    app.config.ACCESS_LOG = False
     log_config['formatters'] = STRING_FORMATTERS
     if os.environ.get('KUBERNETES_PORT'):
         # running inside kubernetes, setup json logging
