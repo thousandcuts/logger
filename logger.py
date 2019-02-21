@@ -248,7 +248,9 @@ def setup_logging(app: sanic.Sanic):
             req_id = current_task.context['req_id']
             time_taken = time.perf_counter() - current_task.context['req_start']
 
-        req_logger.info(None, extra={'request': request, 'response': response, 'time': time_taken, 'req_id': req_id})
+        status_code = response.status
+        level = logging.INFO if 0 < status_code < 400 else logging.WARNING
+        req_logger.log(level, None, extra={'request': request, 'response': response, 'time': time_taken, 'req_id': req_id})
 
 
 def _task_factory(loop: asyncio.AbstractEventLoop, coro: asyncio.coroutine) -> asyncio.Task:
