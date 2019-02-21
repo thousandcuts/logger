@@ -201,14 +201,14 @@ def get_log(name='root'):
 
 def setup_logging(app: sanic.Sanic):
     app.config.LOGO = f'Sanic v.{sanic.__version__}'
-    log_config = DEFAULT_LOGGING
     app.config.ACCESS_LOG = False
+    log_config = DEFAULT_LOGGING.copy()
     log_config['formatters'] = STRING_FORMATTERS
     if os.environ.get('KUBERNETES_PORT'):
         # running inside kubernetes, setup json logging
         log_config['formatters'] = JSON_FORMATTERS
 
-    logging.config.dictConfig(DEFAULT_LOGGING)
+    logging.config.dictConfig(log_config)
     asyncio.get_event_loop().set_task_factory(_task_factory)
     req_logger = logging.getLogger('sanic.access')
 
