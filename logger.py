@@ -199,6 +199,25 @@ def get_log(name='root'):
     return logging.getLogger(name)
 
 
+def set_context_property(name, value):
+    current_task = asyncio.current_task()
+    if current_task:
+        if hasattr(current_task, 'context'):
+            current_task.context[name] = value
+        else:
+            current_task.context = dict([(name, value)])
+    else:
+        logging.error('No current_task available from asyncio, is logging set up?')
+
+
+def get_context_property(name):
+    current_task = asyncio.current_task()
+    if current_task:
+        if hasattr(current_task, 'context'):
+            return current_task.context.get(name)
+    return None
+
+
 def setup_logging(app: sanic.Sanic):
     app.config.LOGO = f'Sanic v.{sanic.__version__}'
     app.config.ACCESS_LOG = False
