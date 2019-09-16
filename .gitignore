@@ -4,3 +4,4 @@
 # setup.py related dirs:
 dist/
 MANIFEST
+logger.egg-info/
