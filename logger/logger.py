@@ -30,7 +30,7 @@ class JSONFormatter(logging.Formatter):
             msg['file'] = f'{record.filename}:{record.lineno}' if record.lineno else record.filename
         if hasattr(record, 'request_id'):
             msg['request_id'] = record.request_id
-            msg['request_time'] = record.time_taken
+            msg['request_time'] = record.request_time
         return json_string(msg)
 
 
