@@ -70,7 +70,7 @@ def setup_sanic_logging(app: sanic.Sanic, service=None):
     }
     config['loggers']['sanic.access'] = {
         'handlers': ['request'],
-        'level': 'DEBUG',
+        'level': 'ERROR',
         'propagate': False
     }
     config['loggers']['sanic.error'] = {
