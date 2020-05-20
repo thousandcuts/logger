@@ -24,8 +24,8 @@ async def log_json_pre(request):
     Setup unique request ID and start time
     :param request: Web request
     """
-    request['request_id'] = str(uuid.uuid4())
-    request['request_start'] = time.perf_counter()
+    request.ctx.request_id = str(uuid.uuid4())
+    request.ctx.request_start = time.perf_counter()
 
 
 async def log_json_post(request, response):
@@ -35,14 +35,14 @@ async def log_json_post(request, response):
     :param response: HTTP Response
     :return:
     """
-    time_taken = time.perf_counter() - (request['request_start'] or -1)
+    time_taken = time.perf_counter() - (request.ctx.request_start or -1)
     level = logging.INFO if 0 < response.status < 400 else logging.WARNING
     msg = f'{request.method} {request.path} {response.status}'
     logging.getLogger('sanic.access').log(level, msg, extra={
         'request': request,
         'response': response,
         'request_time': time_taken,
-        'request_id': request['request_id']
+        'request_id': request.ctx.request_id
     })
 
 
