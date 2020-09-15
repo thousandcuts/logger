@@ -2,6 +2,7 @@
 .venv/
 
 # setup.py related dirs:
+build/
 dist/
 MANIFEST
 logger.egg-info/
